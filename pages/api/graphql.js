@@ -1,4 +1,4 @@
-import { ApolloServer, gql, makeExecutableSchema } from "apollo-server-micro";
+import { ApolloServer, makeExecutableSchema } from "apollo-server-micro";
 import dbConnect from "lib/dbConnect";
 import typeDefs from "apollo/typeDefs";
 import resolvers from "apollo/resolvers";
@@ -18,9 +18,7 @@ export const config = {
 
 const server = new ApolloServer({
   schema,
-  fetchOptions: {
-    mode: "no-cors",
-  },
+  fetchOptions: { mode: "no-cors" },
   context: async () => {
     await dbConnect();
   },
@@ -30,7 +28,7 @@ const startServer = server.start();
 
 export default cors(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3008");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
