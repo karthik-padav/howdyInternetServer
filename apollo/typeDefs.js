@@ -20,10 +20,11 @@ const typeDefs = gql`
   input ProductInput {
     title: String!
     productId: String!
-    availableColor: JSON
+    productColors: JSON
     price: JSON
     rating: Float
     thumbnail: JSON
+    reviews: JSON
   }
 
   type Post {
@@ -40,10 +41,11 @@ const typeDefs = gql`
     id: ID
     title: String
     productId: String
-    availableColor: JSON
+    productColors: JSON
     price: JSON
     rating: Float
     thumbnail: JSON
+    reviews: JSON
   }
 
   type Query {
