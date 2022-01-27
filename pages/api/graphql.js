@@ -22,8 +22,8 @@ const server = new ApolloServer({
   context: async () => {
     await dbConnect();
   },
-  playground: true,
-  introspection: true,
+  playground: process.env.PLAYGROUND,
+  introspection: process.env.PLAYGROUND,
 });
 
 const startServer = server.start();
