@@ -20,10 +20,11 @@ const typeDefs = gql`
   input ProductInput {
     title: String!
     productId: String!
-    availableColor: JSON
+    productColors: JSON
     price: JSON
     rating: Float
     thumbnail: JSON
+    reviews: JSON
   }
 
   type Post {
@@ -33,23 +34,44 @@ const typeDefs = gql`
     slug: String
     category: String
     lastScrappedOn: Date
-    products(sort: String, limit: Int, start: Int, where: JSON): [Products]
+    products(
+      sort: String
+      limit: Int
+      skip: Int
+      where: JSON
+    ): ProductsPagination
   }
 
   type Products {
     id: ID
     title: String
     productId: String
-    availableColor: JSON
+    productColors: JSON
     price: JSON
     rating: Float
     thumbnail: JSON
+    reviews: JSON
+  }
+
+  type ProductsPagination {
+    data: [Products]
+    totalCount: String
+  }
+
+  type PostPagination {
+    data: [Post]
+    totalCount: String
   }
 
   type Query {
     hello: String
-    getProducts(sort: String, limit: Int, skip: Int, where: JSON): [Products]
-    getPosts(sort: String, limit: Int, skip: Int, where: JSON): [Post]
+    getProducts(
+      sort: String
+      limit: Int
+      skip: Int
+      where: JSON
+    ): ProductsPagination
+    getPosts(sort: String, limit: Int, skip: Int, where: JSON): PostPagination
   }
 
   type Mutation {

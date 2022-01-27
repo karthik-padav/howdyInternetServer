@@ -21,27 +21,58 @@ const resolvers = {
     },
     getProducts: async (_, args) => {
       const { sort = "createdAt", limit = 20, skip = 0, where = {} } = args;
-      return await Product.find(where)
-        .skip(skip)
-        .limit(limit)
-        .sort({ [sort]: 1 });
+      const [listResult, countResult] = await Promise.all([
+        Product.find(where)
+          .skip(skip)
+          .limit(limit)
+          .sort({ [sort]: -1 }),
+        Product.count(where),
+      ]);
+
+      return {
+        data: listResult,
+        totalCount: countResult,
+      };
     },
+
     getPosts: async (_, args) => {
       const { sort = "createdAt", limit = 20, skip = 0, where = {} } = args;
-      return await Post.find(where)
-        .skip(skip)
-        .limit(limit)
-        .sort({ [sort]: 1 });
+      const [listResult, countResult] = await Promise.all([
+        Post.find(where)
+          .skip(skip)
+          .limit(limit)
+          .sort({ [sort]: -1 }),
+        Post.count(where),
+      ]);
+
+      return {
+        data: listResult,
+        totalCount: countResult,
+      };
     },
   },
 
   Post: {
     products: async (parent, args) => {
       const { sort = "createdAt", limit = 20, skip = 0, where = {} } = args;
-      return await Product.find({ _id: { $in: parent.products }, ...where })
-        .skip(skip)
-        .limit(limit)
-        .sort({ [sort]: 1 });
+      const [listResult, countResult] = await Promise.all([
+        Product.find({
+          _id: { $in: parent.products },
+          ...where,
+        })
+          .skip(skip)
+          .limit(limit)
+          .sort({ [sort]: -1 }),
+        Product.count({
+          _id: { $in: parent.products },
+          ...where,
+        }),
+      ]);
+
+      return {
+        data: listResult,
+        totalCount: countResult,
+      };
     },
   },
 
