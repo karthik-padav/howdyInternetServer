@@ -30,10 +30,8 @@ const startServer = server.start();
 
 export default cors(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    process.env.WHITE_LIST.split(",")
-  );
+  if (process.env.WHITE_LIST.split(",").includes(req.headers.origin))
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
