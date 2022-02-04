@@ -51,6 +51,10 @@ const typeDefs = gql`
     rating: Float
     thumbnail: JSON
     reviews: JSON
+    images: JSON
+    features: JSON
+    technicalDetails: JSON
+    productInformation: JSON
   }
 
   type ProductsPagination {
