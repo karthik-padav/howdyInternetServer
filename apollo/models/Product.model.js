@@ -11,6 +11,10 @@ const ProductSchema = new mongoose.Schema(
     rating: { type: String },
     reviews: { type: String },
     thumbnail: { type: JSON },
+    images: { type: JSON },
+    features: { type: JSON },
+    technicalDetails: { type: JSON },
+    productInformation: { type: JSON },
   },
   { timestamps: true }
 );
